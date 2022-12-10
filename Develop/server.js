@@ -34,10 +34,41 @@ app.get('/api/notes', (req, res) => {
 
 const readFromFile = util.promisify(fs.readFile);
 
-// Like line 23, but writeFile, save to database, send everything over
+
+const writeToFile = (destination, content) =>
+    fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
+        err ? console.error(err) : console.info(`\nData written to ${destination}`)
+    );
+
+
+const readAndAppend = (content, file) => {
+    fs.readFile(file, 'utf8', (err, data) => {
+        if (err) {
+            console.error(err);
+        } else {
+            const parsedData = JSON.parse(data);
+            parsedData.push(content);
+            writeToFile(file, parsedData);
+        }
+    });
+};
+
 app.post('/api/notes', (req, res) => {
-    console.info(`${req.method} request received from Notes`);
-    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+    console.info(`${req.method} request received to add a note`);
+
+    const { title, noteText } = req.body;
+
+    if (req.body) {
+        const newNote = {
+            title,
+            noteText,
+        };
+
+        readAndAppend(newNote, './db/db.json');
+        res.json(`Note added successfully 🚀`);
+    } else {
+        res.error('Error in adding note');
+    }
 });
 
 // keep at bottom! (Wild Card)
