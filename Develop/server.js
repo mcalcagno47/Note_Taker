@@ -53,6 +53,11 @@ const readAndAppend = (content, file) => {
     });
 };
 
+app.get('/api/notes', (req, res) => {
+    console.info(`${req.method} request received for notes`);
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+});
+
 app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request received to add a note`);
 
