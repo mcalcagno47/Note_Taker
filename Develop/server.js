@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
+const uuid = require('./public/assets/js/uuid')
 
 const PORT = process.env.PORT || 3001;
 
@@ -66,6 +67,7 @@ app.post('/api/notes', (req, res) => {
         const newNote = {
             title,
             noteText,
+            note_id: uuid(),
         };
 
         readAndAppend(newNote, './db/db.json');
