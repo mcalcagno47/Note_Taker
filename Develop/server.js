@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const util = require('util');
 
 const PORT = process.env.PORT || 3001;
 
@@ -31,8 +32,13 @@ app.get('/api/notes', (req, res) => {
     })
 });
 
+const readFromFile = util.promisify(fs.readFile);
+
 // Like line 23, but writeFile, save to database, send everything over
-app.post
+app.post('/api/notes', (req, res) => {
+    console.info(`${req.method} request received from Notes`);
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+});
 
 // keep at bottom! (Wild Card)
 app.get('*', (req, res) => {
