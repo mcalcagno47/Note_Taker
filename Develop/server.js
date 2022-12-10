@@ -70,7 +70,7 @@ app.post('/api/notes', (req, res) => {
         };
 
         readAndAppend(newNote, './db/db.json');
-        res.json(`Note added successfully 🚀`);
+        res.json(`Note added successfully`);
     } else {
         res.error('Error in adding note');
     }
