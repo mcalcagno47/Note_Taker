@@ -77,6 +77,10 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
+app.delete('/api/notes/${note_id}', (req, res) => {
+    res.send('DELETE Request Called')
+});
+
 // keep at bottom! (Wild Card)
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
