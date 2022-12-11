@@ -47,7 +47,7 @@ After one opens the application, they will be greeted by a launch screen.  When 
 
 
 ## Links
-Site Link: Not applicable, as this assignment must be run from localhost:3001 
+Site Link: https://ancient-thicket-48226.herokuapp.com/, but can be run from localhost:3001 
 Github: https://github.com/mcalcagno47/Note_Taker  
 
 
