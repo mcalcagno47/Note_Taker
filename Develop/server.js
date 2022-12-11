@@ -61,12 +61,12 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request received to add a note`);
 
-    const { title, noteText } = req.body;
+    const { title, text } = req.body;
 
     if (req.body) {
         const newNote = {
             title,
-            noteText,
+            text,
             note_id: uuid(),
         };
 
