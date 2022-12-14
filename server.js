@@ -78,8 +78,24 @@ app.post('/api/notes', (req, res) => {
 });
 
 app.delete('/api/notes/${note_id}', (req, res) => {
-    res.send('DELETE Request Called')
-});
+    res.send('DELETE Request Called');
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        if (err) {
+            res.json({ message: 'There was an error somewhere. I dont know, Im a student' })
+        } else {
+            const notesParsed = JSON.parse(data);
+            const newParsedNotes = notesParsed.filter((note) => {
+                return note.note_id !== req.params.note_id
+            })
+            fs.writeFile('./db/db.json', JSON.stringify(newParsedNotes, null, 4), (err) => {
+                if (err) {
+                    res.json({ message: 'Did not delete. How did you mess this up?' })
+                }
+            })
+        }
+    });
+}
+);
 
 // keep at bottom! (Wild Card)
 app.get('*', (req, res) => {
